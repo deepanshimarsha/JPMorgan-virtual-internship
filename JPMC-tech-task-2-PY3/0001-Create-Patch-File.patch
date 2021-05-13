@@ -1,0 +1,113 @@
+From 74213a195d0a358e1ad21650652e5d5db10ab2d2 Mon Sep 17 00:00:00 2001
+From: Deepanshi Sharma <deepanshisharma2510@gmail.com>
+Date: Thu, 13 May 2021 11:35:42 +0530
+Subject: [PATCH] Create Patch File
+
+---
+ 0001-Update-README.md.patch | 27 ------------------------
+ src/Graph.tsx               | 41 ++++++++++++++++++-------------------
+ 2 files changed, 20 insertions(+), 48 deletions(-)
+ delete mode 100644 0001-Update-README.md.patch
+
+diff --git a/0001-Update-README.md.patch b/0001-Update-README.md.patch
+deleted file mode 100644
+index 8c505ed..0000000
+--- a/0001-Update-README.md.patch
++++ /dev/null
+@@ -1,27 +0,0 @@
+-From cc8ffba90325f7f163d7a996fc5c5754ef8149ba Mon Sep 17 00:00:00 2001
+-From: jbf-insidesherpa <54832297+jbf-insidesherpa@users.noreply.github.com>
+-Date: Fri, 31 Jul 2020 11:02:34 +1000
+-Subject: [PATCH] Update README.md
+-
+----
+- README.md | 4 +++-
+- 1 file changed, 3 insertions(+), 1 deletion(-)
+-
+-diff --git a/README.md b/README.md
+-index e4c3a9e..c590a8c 100755
+---- a/README.md
+-+++ b/README.md
+-@@ -61,7 +61,9 @@ Open http://localhost:3000 to view the app in the browser. The page will reload
+- <h2>Known Issues</h2>
+- Some users seem to be having trouble with the unzipped version of the node_modules back up for windows. 
+- This is the alternative unzipped version:
+--https://drive.google.com/drive/folders/1wzIlt-OeiK6nYEHidsOGlpJ_KmeoPVXz?usp=sharing
+-+https://drive.google.com/drive/folders/1wzIlt-OeiK6nYEHidsOGlpJ_KmeoPVXz
+-+
+-+Note: You may need to (hard) refresh the link to the public gdrive to see all of the files/folders e.g. @jpmorganchase/perspective as it takes gdrive a bit to load them for you.
+- 
+- 
+- <h2>How to fix the code to meet the objectives</h2>
+--- 
+-2.29.2.windows.2
+-
+diff --git a/src/Graph.tsx b/src/Graph.tsx
+index c168c3f..8d1a8f1 100644
+--- a/src/Graph.tsx
++++ b/src/Graph.tsx
+@@ -38,26 +38,6 @@ class Graph extends Component<IProps, {}> {
+   componentDidMount() {
+     // Get element to attach the table from the DOM.
+     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
+-
+-    //graph we wanted to visualize the data as
+-    elem.setAttribute('view', 'y_line');
+-
+-    //to distinguish stock
+-    elem.setAttribute('column-pivots', '["stock"]');
+-
+-    //it is the x-axis of our graph
+-    //maps each datapoint based on the timestamp
+-    elem.setAttribute('row-pivots', '["timestamp"]');
+-
+-    //focus on a particular part of a stock’s data along the y-axis
+-    elem.setAttribute('columns','["top_ask_price"]');
+-
+-    //handle the duplicated data
+-    elem.setAttribute('aggregates',`
+-        {"stock": "distinct count",
+-        "top_ask_price": "avg",
+-        "top_bid_price": "avg",
+-        "timestamp": "distinct count"}`);
+     const schema = {
+       stock: 'string',
+       top_ask_price: 'float',
+@@ -65,7 +45,7 @@ class Graph extends Component<IProps, {}> {
+       timestamp: 'date',
+     };
+ 
+-    if (window.perspective && window.perspective.worker()) {
++    if (window.perspective) {
+       this.table = window.perspective.worker().table(schema);
+     }
+     if (this.table) {
+@@ -73,6 +53,25 @@ class Graph extends Component<IProps, {}> {
+ 
+       // Add more Perspective configurations here.
+       elem.load(this.table);
++      //graph we wanted to visualize the data as
++      elem.setAttribute('view', 'y_line');
++
++      //to distinguish stock
++      elem.setAttribute('column-pivots', '["stock"]');
++
++      //it is the x-axis of our graph
++      //maps each datapoint based on the timestamp
++      elem.setAttribute('row-pivots', '["timestamp"]');
++
++      //focus on a particular part of a stock’s data along the y-axis
++      elem.setAttribute('columns','["top_ask_price"]');
++
++      //handle the duplicated data
++      elem.setAttribute('aggregates',`
++          {"stock": "distinct count",
++          "top_ask_price": "avg",
++          "top_bid_price": "avg",
++          "timestamp": "distinct count"}`);
+     }
+   }
+ 
+-- 
+2.29.2.windows.2
+
